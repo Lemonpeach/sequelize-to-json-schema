@@ -2,7 +2,9 @@ import Sequelize from 'sequelize'
 import uuidv4 from 'uuid/v4'
 import { forEach, isNil, get } from 'lodash'
 
-import { isArray, removeBrackets, calcMaximum } from './utils'
+import {
+  isArray, removeBrackets, calcMaximum, isVirtual
+} from './utils'
 
 const getString = value => ({
   type: 'string',
@@ -110,6 +112,12 @@ const transformArray = value => {
   return arraySchema
 }
 
+const transformVirtual = value => {
+  const returnType = get(value, 'type.returnType')
+  const returnTypeTransformer = TRANSFORM_MAP[removeBrackets(returnType.toString())]
+  return returnTypeTransformer(get(value, 'type.returnType'))
+}
+
 export const jsonSchema = model => {
   const schema = {
     type: 'object',
@@ -122,6 +130,8 @@ export const jsonSchema = model => {
 
     if (isArray(type)) {
       schema.properties[key] = transformArray(value)
+    } else if (isVirtual(type)) {
+      schema.properties[key] = transformVirtual(value)
     } else {
       const transformer = TRANSFORM_MAP[removeBrackets(type)]
       schema.properties[key] = transformer(value)

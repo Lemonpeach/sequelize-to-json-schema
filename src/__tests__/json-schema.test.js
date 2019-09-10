@@ -156,6 +156,13 @@ describe('json-schema', () => {
         type: 'string',
         enum: ['rice', 'pasta']
       }
+    ],
+    [
+      'virtual with return type string',
+      Sequelize.VIRTUAL(Sequelize.STRING, ['firstName']),
+      {
+        type: 'string'
+      }
     ]
   ]
 
@@ -205,7 +212,6 @@ describe('json-schema', () => {
   )
 
   test('should handle default values', () => {
-    const Sequelize = require('sequelize')
     const { jsonSchema } = require('../json-schema')
 
     const defaultUuidModel = sequelize.define('default-uuid', {
@@ -274,7 +280,6 @@ describe('json-schema', () => {
   })
 
   test('should handle required values', () => {
-    const Sequelize = require('sequelize')
     const { jsonSchema } = require('../json-schema')
 
     const requiredModel = sequelize.define('required-uuid', {
