@@ -125,7 +125,7 @@ export const jsonSchema = model => {
     required: []
   }
 
-  forEach(model.rawAttributes, (value, key) => {
+  forEach(get(model, 'rawAttributes'), (value, key) => {
     const type = value.type.toString()
 
     if (isArray(type)) {
