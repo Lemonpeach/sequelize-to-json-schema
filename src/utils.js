@@ -1,5 +1,5 @@
 export const removeBrackets = value => (
-  value.replace(/^(.*?)\(.*/, '$1')
+  value ? value.replace(/^(.*?)\(.*/, '$1') : value
 )
 
 export const isArray = value => (
