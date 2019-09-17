@@ -693,4 +693,28 @@ describe('json-schema', () => {
       required: ['id', 'field', 'createdAt', 'updatedAt']
     })
   })
+
+  test('should ignore ignoredAttributes', () => {
+    const { jsonSchema } = require('../json-schema')
+
+    const requiredModel = sequelize.define('required-uuid', {
+      field: {
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
+        allowNull: false
+      }
+    })
+
+    expect(jsonSchema(requiredModel, ['id', 'createdAt', 'updatedAt'])).toEqual({
+      type: 'object',
+      properties: {
+        field: {
+          type: 'string',
+          format: 'uuid',
+          default: '0ef9f424-c6f0-4bfe-b55e-87c50420180f'
+        }
+      },
+      required: ['field']
+    })
+  })
 })

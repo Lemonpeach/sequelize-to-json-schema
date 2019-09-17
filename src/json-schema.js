@@ -1,7 +1,7 @@
-import { forEach, isNil, get } from 'lodash'
+import { forEach, isNil, get, includes } from 'lodash'
 import { mapType } from './map-type'
 
-export const jsonSchema = model => {
+export const jsonSchema = (model, ignoredAttributes = []) => {
   const schema = {
     type: 'object',
     properties: {},
@@ -9,8 +9,10 @@ export const jsonSchema = model => {
   }
 
   forEach(get(model, 'rawAttributes'), (value, key) => {
-    schema.properties[key] = mapType(value)
-    !isNil(value.allowNull) && !value.allowNull && schema.required.push(key)
+    if (!includes(ignoredAttributes, key)) {
+      schema.properties[key] = mapType(value)
+      !isNil(value.allowNull) && !value.allowNull && schema.required.push(key)
+    }
   })
 
   return schema
