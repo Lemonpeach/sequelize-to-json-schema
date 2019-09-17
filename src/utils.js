@@ -13,3 +13,7 @@ export const isVirtual = value => (
 export const calcMaximum = length => (
   length ? Math.pow(10, length) : undefined
 )
+
+export const calcMultipleOf = decimals => (
+  decimals ? Math.pow(10, -1 * decimals) : undefined
+)
