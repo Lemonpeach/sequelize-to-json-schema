@@ -49,12 +49,18 @@ describe('json-schema', () => {
     [
       'integer',
       Sequelize.INTEGER,
-      { type: 'number' }
+      {
+        type: 'number',
+        multipleOf: 1
+      }
     ],
     [
-      'integer',
+      'big int',
       Sequelize.BIGINT,
-      { type: 'number' }
+      {
+        type: 'number',
+        multipleOf: 1
+      }
     ],
     [
       'float',
@@ -65,7 +71,8 @@ describe('json-schema', () => {
       'float 5',
       Sequelize.FLOAT(5),
       {
-        type: 'number'
+        type: 'number',
+        exclusiveMaximum: 100000
       }
     ],
     [
@@ -88,8 +95,8 @@ describe('json-schema', () => {
       Sequelize.DECIMAL(10, 2),
       {
         type: 'number',
-        precision: 10,
-        scale: 2
+        exclusiveMaximum: 100000000,
+        multipleOf: 0.01
       }
     ],
     [
@@ -147,8 +154,8 @@ describe('json-schema', () => {
         type: 'array',
         items: {
           type: 'number',
-          precision: 10,
-          scale: 2
+          exclusiveMaximum: 100000000,
+          multipleOf: 0.01
         }
       }
     ],
@@ -199,7 +206,8 @@ describe('json-schema', () => {
         properties: {
           field: json,
           id: {
-            type: 'number'
+            type: 'number',
+            multipleOf: 1
           },
           createdAt: {
             type: 'string',
@@ -341,7 +349,7 @@ describe('json-schema', () => {
     [
       'isFloat',
       {
-        type: Sequelize.FLOAT(42, 2),
+        type: Sequelize.FLOAT(6, 2),
         validate: {
           isFloat: true
         }
@@ -354,15 +362,15 @@ describe('json-schema', () => {
     [
       'isDecimal',
       {
-        type: Sequelize.DECIMAL(42, 2),
+        type: Sequelize.DECIMAL(6, 2),
         validate: {
           isDecimal: true
         }
       },
       {
         type: 'number',
-        precision: 42,
-        scale: 2
+        multipleOf: 0.01,
+        exclusiveMaximum: 10000
       }
     ],
     [
@@ -541,7 +549,8 @@ describe('json-schema', () => {
       },
       {
         type: 'number',
-        maximum: 98
+        maximum: 98,
+        multipleOf: 1
       }
     ],
     [
@@ -554,7 +563,8 @@ describe('json-schema', () => {
       },
       {
         type: 'number',
-        minimum: 98
+        minimum: 98,
+        multipleOf: 1
       }
     ]
   ]
@@ -572,7 +582,8 @@ describe('json-schema', () => {
         properties: {
           field: json,
           id: {
-            type: 'number'
+            type: 'number',
+            multipleOf: 1
           },
           createdAt: {
             type: 'string',
@@ -608,7 +619,8 @@ describe('json-schema', () => {
         },
         id: {
           default: undefined,
-          type: 'number'
+          type: 'number',
+          multipleOf: 1
         },
         createdAt: {
           type: 'string',
@@ -639,7 +651,8 @@ describe('json-schema', () => {
           default: 'wonkey watermelon'
         },
         id: {
-          type: 'number'
+          type: 'number',
+          multipleOf: 1
         },
         createdAt: {
           type: 'string',
@@ -677,7 +690,8 @@ describe('json-schema', () => {
         },
         id: {
           type: 'number',
-          default: undefined
+          default: undefined,
+          multipleOf: 1
         },
         createdAt: {
           type: 'string',

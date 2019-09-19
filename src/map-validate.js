@@ -51,11 +51,11 @@ const isInt = () => ({
 })
 
 const isFloat = (value, options) => ({
-  multipleOf: calcMultipleOf(options.decimals)
+  multipleOf: calcMultipleOf(options.decimals || options.scale)
 })
 
 const isDecimal = (value, options) => ({
-  multipleOf: calcMultipleOf(options.decimals)
+  multipleOf: calcMultipleOf(options.decimals || options.scale)
 })
 
 const isLowercase = () => ({
