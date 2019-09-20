@@ -5,6 +5,7 @@
 
 import Errors from '@feathersjs/errors';
 import Ajv from 'ajv';
+import { validateSchema } from 'feathers-hooks-common';
 import jsonSchema from '@lemonpeach/sequelize-to-json-schema';
 
 const getSchema = context => jsonSchema(
@@ -12,7 +13,7 @@ const getSchema = context => jsonSchema(
   ['createdAt', 'updatedAt', 'id']
 );
 
-export const validateSchema = async (
+export const validateSchemaHook = async (
   context,
   schema = getSchema(context)
 ) => {
@@ -23,7 +24,7 @@ export const validateSchema = async (
         schema.required = [];
       /* eslint no-fallthrough: "error" */
       case 'create':
-        await validateSchemaHook(schema, new Ajv())(context);
+        await validateSchema(schema, new Ajv())(context);
         break;
       default:
         break;
