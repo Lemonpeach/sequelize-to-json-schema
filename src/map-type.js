@@ -2,7 +2,14 @@ import Sequelize from 'sequelize'
 import uuidv4 from 'uuid/v4'
 import { get } from 'lodash'
 
-import { removeBrackets, calcMaximum, isArray, isVirtual } from './utils'
+import {
+  removeBrackets,
+  calcMaximum,
+  isArray,
+  isVirtual,
+  calcMultipleOf,
+  getIntegerPart
+} from './utils'
 import { mapValidate } from './map-validate'
 
 const getString = value => ({
@@ -23,6 +30,7 @@ const getInteger = value => ({
   default: value.defaultValue,
   minimum: get(value, 'type.options.unsigned') && 0,
   exclusiveMaximum: calcMaximum(get(value, 'type.options.length')),
+  multipleOf: 1,
   ...mapValidate(
     get(value, 'validate'),
     get(value, 'type.options')
@@ -33,8 +41,11 @@ const getNumber = value => ({
   type: 'number',
   default: value.defaultValue,
   minimum: get(value, 'type.options.unsigned') && 0,
-  precision: get(value, 'type.options.precision'),
-  scale: get(value, 'type.options.scale'),
+  exclusiveMaximum: calcMaximum(
+    getIntegerPart(get(value, 'type.options.precision'), get(value, 'type.options.scale')) ||
+    get(value, 'type.options.length')
+  ),
+  multipleOf: calcMultipleOf(get(value, 'type.options.scale')),
   ...mapValidate(
     get(value, 'validate'),
     get(value, 'type.options')

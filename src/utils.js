@@ -10,6 +10,10 @@ export const isVirtual = value => (
   value.match(/^VIRTUAL/)
 )
 
+export const getIntegerPart = (precision, scale) => (
+  precision && scale ? precision - scale : undefined
+)
+
 export const calcMaximum = length => (
   length ? Math.pow(10, length) : undefined
 )
