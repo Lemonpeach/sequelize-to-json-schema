@@ -3,6 +3,9 @@
   "version": "0.2.1",
   "description": "Convert Sequelize models to their JSON schema representation.",
   "main": "lib/index.js",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "clean": "shx rm -rf lib",
     "build": "npm run clean && babel src -d lib",
