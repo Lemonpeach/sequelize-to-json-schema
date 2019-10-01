@@ -1,8 +1,11 @@
 {
   "name": "@lemonpeach/sequelize-to-json-schema",
   "version": "0.2.1",
-  "description": "convert sequelize data types to json schema",
+  "description": "Convert Sequelize models to their JSON schema representation.",
   "main": "lib/index.js",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "clean": "shx rm -rf lib",
     "build": "npm run clean && babel src -d lib",
@@ -14,11 +17,24 @@
     "type": "git",
     "url": "git+https://github.com/Lemonpeach/sequelize-to-json-schema.git"
   },
+  "keywords": [
+    "sequelize",
+    "json",
+    "schema",
+    "json schema"
+  ],
   "license": "MPL-2.0",
   "bugs": {
     "url": "https://github.com/Lemonpeach/sequelize-to-json-schema/issues"
   },
   "homepage": "https://github.com/Lemonpeach/sequelize-to-json-schema#readme",
+  "peerDependencies": {
+    "sequelize": "^5.18.1"
+  },
+  "dependencies": {
+    "lodash": "^4.17.15",
+    "uuid": "^3.3.3"
+  },
   "devDependencies": {
     "@babel/cli": "^7.5.5",
     "@babel/core": "^7.5.5",
@@ -31,12 +47,8 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
     "jest": "^24.9.0",
-    "lodash": "^4.17.15",
     "pg": "^7.12.1",
     "sequelize": "^5.18.1",
     "shx": "^0.3.2"
-  },
-  "peerDependencies": {
-    "sequelize": "^5.18.1"
   }
 }
