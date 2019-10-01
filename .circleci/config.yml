@@ -14,3 +14,4 @@ jobs:
             - node_modules
           key: dependency-cache-{{ checksum "package.json" }}-{{ checksum "package-lock.json" }}
       - run: npm test
+      - run: npm run release
