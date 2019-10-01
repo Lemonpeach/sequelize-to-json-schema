@@ -11,7 +11,8 @@
     "build": "npm run clean && babel src -d lib",
     "lint": "eslint src",
     "test": "npm run lint && jest src",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "release": "semantic-release"
   },
   "repository": {
     "type": "git",
@@ -39,6 +40,8 @@
     "@babel/cli": "^7.5.5",
     "@babel/core": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
+    "@semantic-release/changelog": "^3.0.4",
+    "@semantic-release/git": "^7.0.16",
     "eslint": "^6.3.0",
     "eslint-config-standard": "^14.1.0",
     "eslint-plugin-import": "^2.18.2",
@@ -48,6 +51,7 @@
     "eslint-plugin-standard": "^4.0.1",
     "jest": "^24.9.0",
     "pg": "^7.12.1",
+    "semantic-release": "^15.13.24",
     "sequelize": "^5.18.1",
     "shx": "^0.3.2"
   }
