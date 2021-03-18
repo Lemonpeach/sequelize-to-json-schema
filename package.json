@@ -51,7 +51,7 @@
     "eslint-plugin-standard": "^4.0.1",
     "jest": "^24.9.0",
     "pg": "^7.12.1",
-    "semantic-release": "^15.13.24",
+    "semantic-release": "^17.2.3",
     "sequelize": "^5.18.1",
     "shx": "^0.3.2"
   }
