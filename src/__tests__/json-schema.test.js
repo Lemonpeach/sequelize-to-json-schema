@@ -3,9 +3,9 @@ describe('json-schema', () => {
   const sequelize = new Sequelize('postgres://fakeUser:pass@fake.com:1111/fake')
 
   beforeEach(() => {
-    jest.mock('uuid/v4', () => ({
+    jest.mock('uuid', () => ({
       __esModule: true,
-      default: () => '0ef9f424-c6f0-4bfe-b55e-87c50420180f'
+      v4: () => '0ef9f424-c6f0-4bfe-b55e-87c50420180f'
     }))
   })
 
