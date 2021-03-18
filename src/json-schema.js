@@ -1,18 +1,31 @@
-import { forEach, isNil, get, includes } from 'lodash'
+import { forEach, isNil, get, pick, omit, merge } from 'lodash'
 import { mapType } from './map-type'
 
-export const jsonSchema = (model, ignoredAttributes = []) => {
+const DEFAULT_OPTIONS = {
+  ignore: [],
+  include: []
+}
+
+export const jsonSchema = (model, options) => {
   const schema = {
     type: 'object',
     properties: {},
     required: []
   }
 
-  forEach(get(model, 'rawAttributes'), (value, key) => {
-    if (!includes(ignoredAttributes, key)) {
-      schema.properties[key] = mapType(value)
-      !isNil(value.allowNull) && !value.allowNull && schema.required.push(key)
-    }
+  const { ignore, include } = merge({}, DEFAULT_OPTIONS, options)
+
+  let attributes = get(model, 'rawAttributes')
+
+  if (include.length > 0) {
+    attributes = pick(attributes, include)
+  }
+
+  attributes = omit(attributes, ignore)
+
+  forEach(attributes, (value, key) => {
+    schema.properties[key] = mapType(value)
+    !isNil(value.allowNull) && !value.allowNull && schema.required.push(key)
   })
 
   return schema

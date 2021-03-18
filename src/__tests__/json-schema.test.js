@@ -708,7 +708,7 @@ describe('json-schema', () => {
     })
   })
 
-  test('should ignore ignoredAttributes', () => {
+  test('should ignore attributes', () => {
     const { jsonSchema } = require('../json-schema')
 
     const requiredModel = sequelize.define('required-uuid', {
@@ -719,7 +719,61 @@ describe('json-schema', () => {
       }
     })
 
-    expect(jsonSchema(requiredModel, ['id', 'createdAt', 'updatedAt'])).toEqual({
+    expect(
+      jsonSchema(requiredModel, { ignore: ['id', 'createdAt', 'updatedAt'] })
+    ).toEqual({
+      type: 'object',
+      properties: {
+        field: {
+          type: 'string',
+          format: 'uuid',
+          default: '0ef9f424-c6f0-4bfe-b55e-87c50420180f'
+        }
+      },
+      required: ['field']
+    })
+  })
+
+  test('should include attributes', () => {
+    const { jsonSchema } = require('../json-schema')
+
+    const requiredModel = sequelize.define('required-uuid', {
+      field: {
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
+        allowNull: false
+      }
+    })
+
+    expect(
+      jsonSchema(requiredModel, { include: ['field'] })
+    ).toEqual({
+      type: 'object',
+      properties: {
+        field: {
+          type: 'string',
+          format: 'uuid',
+          default: '0ef9f424-c6f0-4bfe-b55e-87c50420180f'
+        }
+      },
+      required: ['field']
+    })
+  })
+
+  test('should override included with ignored attributes', () => {
+    const { jsonSchema } = require('../json-schema')
+
+    const requiredModel = sequelize.define('required-uuid', {
+      field: {
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
+        allowNull: false
+      }
+    })
+
+    expect(
+      jsonSchema(requiredModel, { include: ['id', 'field'], ignore: ['id'] })
+    ).toEqual({
       type: 'object',
       properties: {
         field: {
